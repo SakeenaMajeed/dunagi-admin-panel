@@ -1,0 +1,111 @@
+
+
+
+
+my-nextjs-app/
+│
+├── public/                      # Static assets like images, fonts, and other static files
+│
+├── src/                         # Main source code folder
+│   ├── components/              # Reusable UI components (e.g., buttons, headers, footers)
+│   ├── pages/                   # Page components for routing (Next.js handles routing automatically based on file structure)
+│   │   ├── api/                 # API routes (serverless functions) inside pages/api
+│   │   ├── _app.tsx             # Global wrapper (app-level context providers, theme providers)
+│   │   ├── _document.tsx        # Custom document structure for HTML and body
+│   │   ├── index.tsx            # Main landing page or homepage
+│   │   └── otherPage.tsx        # Other page components
+│   │
+│   ├── lib/                     # Utility functions, services, etc. (logic and helpers)
+│   │   ├── constants/           # Constants like config variables, API URLs, etc.
+│   │   ├── hooks/               # Custom React hooks
+│   │   ├── services/            # API service calls, data-fetching functions
+│   │   ├── utils/               # Helper functions, utilities
+│   │   └── validations/         # Validation functions (e.g., for forms)
+│   │
+│   ├── styles/                  # Global styles, CSS modules, or SCSS
+│   │   ├── globals.css          # Global CSS (e.g., for layout, body, etc.)
+│   │   ├── theme/               # Theme-related files (e.g., dark/light mode, global design tokens)
+│   │   └── components/          # CSS modules for individual components (scoped CSS)
+│   │
+│   ├── store/                   # Redux, Zustand, or Context API state management logic
+│   │   ├── actions/             # Actions for state management
+│   │   ├── reducers/            # Reducers for managing state in a Redux store
+│   │   └── store.ts             # Store initialization (e.g., Redux store or global state)
+│   │
+│   ├── types/                   # TypeScript types and interfaces
+│   │   └── index.d.ts           # Global types and interfaces (shared across the app)
+│   │
+│   └── assets/                  # Images, videos, icons, etc. (you could also add this to public if you prefer)
+│
+├── .env.local                   # Local environment variables (don't commit this file)
+├── .gitignore                   # Git ignore file
+├── next.config.js               # Next.js configuration (e.g., custom Webpack settings, Next.js plugins)
+├── tsconfig.json                # TypeScript configuration file
+├── package.json                 # Project dependencies and scripts
+└── README.md                    # Project description and documentation
+
+
+
+
+
+
+
+
+
+api call 
+import { getMyStudents, updateMyStudentsByStudentId } from '../api/services/dashboardApi';
+const updatedStudent = await updateMyStudentsByStudentId({
+          id: '12345',  // Example student ID
+          body: { name: 'John Doe Updated' },  // Example student update
+        });
+
+
+
+
+
+TL;DR – Best Practice Combo:
+✅ Use middleware.js to restrict access on route level
+✅ Use getServerSession() inside protected pages for session data + extra checks
+✅ (Optional) Add role-based logic in middleware if needed (can show how if you want)
+
+
+Want Role-Based Protection Too?
+You can also check for user roles in the middleware if needed. For example:
+
+export default withAuth({
+  pages: {
+    signIn: "/login",
+  },
+  callbacks: {
+    authorized: ({ token }) => {
+      return token?.role === "ADMIN"; // only allow admins
+    },
+  },
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+src/
+├── lib/
+│   ├── utils/
+│   │   ├── formatters.ts          # Contains functions for formatting data (dates, currency, etc.)
+│   │   ├── validations.ts         # Contains validation functions (email, password, etc.)
+│   │   ├── arrayHelpers.ts        # Contains functions for working with arrays
+│   │   ├── mathHelpers.ts         # Functions for math operations
+│   │   ├── storageHelpers.ts      # Functions for interacting with localStorage/sessionStorage
+│   │   ├── stringHelpers.ts       # Functions for string manipulation
+│   │   ├── urlHelpers.ts          # Functions for handling URLs and query parameters
+│   │   └── dateHelpers.ts         # Functions for working with dates and times
